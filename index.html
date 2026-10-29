@@ -1,0 +1,745 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Digital Portfolio</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f3faf6;
+            background-image: url("portfolio-background.png");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: #263d34;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #b8e5ce;
+            padding: 22px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        header h1 {
+            font-size: 25px;
+            color: #245b43;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        button {
+            border: none;
+            background: #ffffff;
+            color: #286448;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #d9f2e4;
+        }
+
+        nav button.active {
+            background: #367c59;
+            color: white;
+        }
+
+        main {
+            padding: 35px 8%;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .welcome {
+            background: #ffffff;
+            border-left: 6px solid #75bd96;
+            padding: 45px 35px;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px #0000000a;
+            margin-top: 20px;
+        }
+
+        .welcome h2 {
+            font-size: 34px;
+            color: #286448;
+            margin-bottom: 15px;
+        }
+
+        .welcome p {
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .primary-btn {
+            background: #367c59;
+            color: white;
+            padding: 12px 20px;
+        }
+
+        .primary-btn:hover {
+            background: #245b43;
+            color: white;
+        }
+
+        .section-title {
+            color: #286448;
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #64776d;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 25px;
+            align-items: stretch;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #d8eadf;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 12px #00000008;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-width: 0;
+        }
+
+        .card h3 {
+            color: #286448;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #64776d;
+            line-height: 1.6;
+            margin-bottom: 18px;
+            flex-grow: 1;
+        }
+
+        .card button {
+            align-self: flex-start;
+            margin-top: auto;
+        }
+
+        .about-card {
+            background: white;
+            border-radius: 14px;
+            padding: 30px;
+            max-width: 750px;
+            box-shadow: 0 4px 15px #0000000a;
+        }
+
+        .about-card h3 {
+            color: #286448;
+            margin-bottom: 10px;
+        }
+
+        .about-card p {
+            line-height: 1.8;
+            margin: 12px 0;
+        }
+
+        .about-card a {
+            color: #286448;
+            overflow-wrap: anywhere;
+        }
+
+        .preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .preview-item {
+            background: white;
+            border: 1px solid #d8eadf;
+            border-radius: 10px;
+            padding: 12px;
+            overflow-wrap: anywhere;
+            min-width: 0;
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            background: #f3faf6;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .preview-item p {
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 10px 0;
+            color: #64776d;
+        }
+
+        .preview-item h3 {
+            color: #286448;
+            overflow-wrap: anywhere;
+            margin-bottom: 8px;
+        }
+
+        .file-icon {
+            background: #f3faf6;
+            min-height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 42px;
+        }
+
+        .preview-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .preview-actions button,
+        .preview-actions a {
+            text-decoration: none;
+            font-size: 13px;
+            padding: 9px 12px;
+            border-radius: 7px;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .view-btn {
+            background: #367c59;
+            color: white;
+        }
+
+        .view-btn:hover {
+            background: #245b43;
+            color: white;
+        }
+
+        .download-btn {
+            background: #dcefe3;
+            color: #286448;
+        }
+
+        .back-btn {
+            margin-bottom: 25px;
+            background: #dcefe3;
+        }
+
+        .about-divider {
+            border: 0;
+            border-top: 1px solid #d8eadf;
+            margin: 20px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 22px;
+            color: #64776d;
+            font-size: 13px;
+        }
+
+        #file-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.9);
+            overflow-y: auto;
+            padding: 25px;
+        }
+
+        #file-modal.hidden {
+            display: none;
+        }
+
+        .modal-header {
+            max-width: 1000px;
+            margin: 0 auto 15px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .modal-close {
+            background: white;
+            color: #245b43;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        #modal-body {
+            max-width: 1000px;
+            margin: 0 auto;
+            color: white;
+        }
+
+        #modal-body img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
+            object-fit: contain;
+        }
+
+        #modal-body iframe {
+            width: 100%;
+            height: 80vh;
+            border: none;
+            border-radius: 8px;
+            background: white;
+        }
+
+        #modal-body p {
+            color: white;
+            text-align: center;
+            overflow-wrap: anywhere;
+            line-height: 1.8;
+        }
+
+        #modal-body a {
+            color: #00f2fe;
+        }
+
+        @media (max-width: 1000px) {
+            .card-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 20px;
+            }
+
+            main {
+                padding: 25px 20px;
+            }
+
+            .welcome {
+                padding: 30px 22px;
+            }
+
+            .welcome h2 {
+                font-size: 28px;
+            }
+
+            nav {
+                width: 100%;
+            }
+
+            nav button {
+                flex: 1 1 auto;
+            }
+
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                min-height: 200px;
+            }
+
+            .about-card {
+                padding: 20px;
+            }
+
+            #file-modal {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>My Digital Portfolio</h1>
+
+    <nav>
+        <button class="nav-btn active" data-page="home">Home</button>
+        <button class="nav-btn" data-page="academic">Academic Work</button>
+        <button class="nav-btn" data-page="about">About Me</button>
+    </nav>
+</header>
+
+<main>
+    <section id="home" class="page active">
+        <div class="welcome">
+            <h2>Welcome to My Digital Portfolio!</h2>
+
+            <p>
+                Hello! Welcome to my digital portfolio. This digital portfolio represents
+                my journey as a student at Cavite State University, showcasing my projects,
+                experiences, and personal growth. 
+            </p>
+
+            <button class="primary-btn" onclick="showPage('academic')">
+                Explore My Academic Work
+            </button>
+        </div>
+    </section>
+
+    <section id="academic" class="page">
+        <button class="back-btn" onclick="showPage('home')">
+            ← Back to Home
+        </button>
+
+        <h2 class="section-title">Academic Work</h2>
+        <p class="subtitle">
+            Select a category to view my academic files and photos.
+        </p>
+
+        <div class="card-container">
+            <div class="card">
+                <h3>Activities</h3>
+                <p>View my classroom activities and exercises.</p>
+                <button class="primary-btn" onclick="showPage('activities')">
+                    View Activities
+                </button>
+            </div>
+
+            <div class="card">
+                <h3>Quizzes</h3>
+                <p>View my quiz files and learning assessments.</p>
+                <button class="primary-btn" onclick="showPage('quizzes')">
+                    View Quizzes
+                </button>
+            </div>
+
+            <div class="card">
+                <h3>Projects</h3>
+                <p>Showcase my programming projects and other outputs.</p>
+                <button class="primary-btn" onclick="showPage('projects')">
+                    View Projects
+                </button>
+            </div>
+
+            <div class="card">
+                <h3>Examinations</h3>
+                <p>View my examination-related files and reviewers.</p>
+                <button class="primary-btn" onclick="showPage('examinations')">
+                    View Examinations
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="page">
+        <button class="back-btn" onclick="showPage('home')">
+            ← Back to Home
+        </button>
+
+        <h2 class="section-title">About Me</h2>
+        <p class="subtitle">Get to know me as a student.</p>
+
+        <div class="about-card">
+            <h3 style="text-align: center;">Jaime Risha S. Piolino</h3>
+
+            <p style="text-align: center;">
+                <strong>Course & Section:</strong> BSCS-3A
+            </p>
+            <p style="text-align: center;">
+                <strong>Student number:</strong> 202410192
+            </p>
+
+            <hr class="about-divider">
+
+            <h3>About Me</h3>
+
+            <p>
+                Hello everyone, my name is Jaime Risha S. Piolino. I am third-year 
+                Bachelor of Science in Computer Science student (BSCS-3A) at Cavite
+                State University (CvSU ) - Silang Campus.
+            </p>
+            <p>
+                I am passionate about learning, exploring new interests, and developing 
+                 my skills. Outside academics, I enjoy gaming, reading manga, and watching
+                anime.
+            </p>
+
+            <p>
+                My goal is to create my own applications or establish a business in the future.
+                Beyond professional success, I value personal growth and genuine happiness. I aspire
+                to explore new opportunities, discover more about myself, and build a future that aligns
+                with my interests and values.
+            </p>
+
+            <hr class="about-divider">
+
+            <h3>Social Media & Contact</h3>
+
+           
+            <div class="social-links">
+                <strong>Facebook:</strong>
+                <a href="https://www.facebook.com/jaime.risha.5"
+                target="_blank"
+                rel="noopener noreferrer">
+                     Jaime Risha 
+                </a>
+            <br>
+                <strong>Gmail:</strong> 
+                <a href="mailto:jaimerisha.piolino@cvsu.edu.ph">
+                    jaimerisha.piolino@cvsu.edu.ph
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ACTIVITIES -->
+    <section id="activities" class="page">
+        <button class="back-btn" onclick="showPage('academic')">
+            ← Back to Academic Work
+        </button>
+
+        <h2 class="section-title">Activities</h2>
+        <p class="subtitle">View my classroom activities and exercises.</p>
+
+        <div class="preview-container">
+            <div class="preview-item">
+                <div class="file-icon">📄</div>
+                <h3>Activity 1_Piolino (1).docx.pdf</h3>
+                <div class="preview-actions">
+                    <button class="view-btn" onclick="openStaticFile('materials/Activity%201_Piolino%20(1).docx.pdf', 'Activity 1_Piolino (1).docx.pdf')">View File</button>
+                    <a class="download-btn" href="materials/Activity%201_Piolino%20(1).docx.pdf" download>Download</a>
+                </div>
+            </div>
+
+            <div class="preview-item">
+                <div class="file-icon">📄</div>
+                <h3>Activity 2_Piolino.docx.pdf</h3>
+                <div class="preview-actions">
+                    <button class="view-btn" onclick="openStaticFile('materials/Activity%202_Piolino.docx.pdf', 'Activity 2_Piolino.docx.pdf')">View File</button>
+                    <a class="download-btn" href="materials/Activity%202_Piolino.docx.pdf" download>Download</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUIZZES -->
+    <section id="quizzes" class="page">
+        <button class="back-btn" onclick="showPage('academic')">
+            ← Back to Academic Work
+        </button>
+
+        <h2 class="section-title">Quizzes</h2>
+        <p class="subtitle">View my quiz files and learning assessments.</p>
+
+        <div class="preview-container">
+            <div class="preview-item">
+                <img src="materials/LONG%20QUIZ.jpg" alt="LONG QUIZ" onclick="openStaticFile('materials/LONG%20QUIZ.jpg', 'LONG QUIZ.jpg')">
+                <h3>LONG QUIZ.jpg</h3>
+                <div class="preview-actions">
+                    <button class="view-btn" onclick="openStaticFile('materials/LONG%20QUIZ.jpg', 'LONG QUIZ.jpg')">View File</button>
+                    <a class="download-btn" href="materials/LONG%20QUIZ.jpg" download>Download</a>
+                </div>
+            </div>
+
+            <div class="preview-item">
+                <img src="materials/QUIZ%201.jpg" alt="QUIZ 1" onclick="openStaticFile('materials/QUIZ%201.jpg', 'QUIZ 1.jpg')">
+                <h3>QUIZ 1.jpg</h3>
+                <div class="preview-actions">
+                    <button class="view-btn" onclick="openStaticFile('materials/QUIZ%201.jpg', 'QUIZ 1.jpg')">View File</button>
+                    <a class="download-btn" href="materials/QUIZ%201.jpg" download>Download</a>
+                </div>
+            </div>
+
+            <div class="preview-item">
+                <img src="materials/QUIZ%202.jpg" alt="QUIZ 2" onclick="openStaticFile('materials/QUIZ%202.jpg', 'QUIZ 2.jpg')">
+                <h3>QUIZ 2.jpg</h3>
+                <div class="preview-actions">
+                    <button class="view-btn" onclick="openStaticFile('materials/QUIZ%202.jpg', 'QUIZ 2.jpg')">View File</button>
+                    <a class="download-btn" href="materials/QUIZ%202.jpg" download>Download</a>
+                </div>
+            </div>
+
+            <div class="preview-item">
+                <img src="materials/QUIZ%203.jpg" alt="QUIZ 3" onclick="openStaticFile('materials/QUIZ%203.jpg', 'QUIZ 3.jpg')">
+                <h3>QUIZ 3.jpg</h3>
+                <div class="preview-actions">
+                    <button class="view-btn" onclick="openStaticFile('materials/QUIZ%203.jpg', 'QUIZ 3.jpg')">View File</button>
+                    <a class="download-btn" href="materials/QUIZ%203.jpg" download>Download</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="page">
+        <button class="back-btn" onclick="showPage('academic')">
+            ← Back to Academic Work
+        </button>
+
+        <h2 class="section-title">Projects</h2>
+        <p class="subtitle">View my programming projects and other outputs.</p>
+
+        <div class="preview-container">
+            <div class="preview-item">
+                <h3>No materials added yet</h3>
+                <p>Project materials will appear here after you add them to the materials folder and list them in this page.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXAMINATIONS -->
+    <section id="examinations" class="page">
+        <button class="back-btn" onclick="showPage('academic')">
+            ← Back to Academic Work
+        </button>
+
+        <h2 class="section-title">Examinations</h2>
+        <p class="subtitle">View my examination-related files.</p>
+
+        <div class="preview-container">
+            <div class="preview-item">
+                <img src="materials/MIDTERM%20EXAM.jpg" alt="MIDTERM EXAM" onclick="openStaticFile('materials/MIDTERM%20EXAM.jpg', 'MIDTERM EXAM.jpg')">
+                <h3>MIDTERM EXAM.jpg</h3>
+                <div class="preview-actions">
+                    <button class="view-btn" onclick="openStaticFile('materials/MIDTERM%20EXAM.jpg', 'MIDTERM EXAM.jpg')">View File</button>
+                    <a class="download-btn" href="materials/MIDTERM%20EXAM.jpg" download>Download</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>My Digital Portfolio | Jaime Risha S. Piolino | BSCS-3A</p>
+</footer>
+
+<div id="file-modal" class="hidden" role="dialog" aria-modal="true" aria-label="File Preview">
+    <div class="modal-header">
+        <button type="button" class="modal-close" onclick="closeModal()">✕ Close</button>
+    </div>
+    <div id="modal-body"></div>
+</div>
+
+<script>
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(function(page) {
+            page.classList.remove('active');
+        });
+
+        const selectedPage = document.getElementById(pageId);
+
+        if (selectedPage) {
+            selectedPage.classList.add('active');
+        }
+
+        document.querySelectorAll('.nav-btn').forEach(function(button) {
+            button.classList.remove('active');
+
+            if (button.dataset.page === pageId) {
+                button.classList.add('active');
+            }
+        });
+
+        window.scrollTo(0, 0);
+    }
+
+    document.querySelectorAll('.nav-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            showPage(button.dataset.page);
+        });
+    });
+
+    function closeModal() {
+        const modal = document.getElementById('file-modal');
+        const modalBody = document.getElementById('modal-body');
+
+        modal.classList.add('hidden');
+        modalBody.innerHTML = '';
+    }
+
+    function openStaticFile(filePath, fileName) {
+        const modal = document.getElementById('file-modal');
+        const modalBody = document.getElementById('modal-body');
+
+        modalBody.innerHTML = '';
+
+        const ext = fileName.split('.').pop().toLowerCase();
+
+        if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'].includes(ext)) {
+            const image = document.createElement('img');
+            image.src = filePath;
+            image.alt = fileName;
+            modalBody.appendChild(image);
+        } else if (ext === 'pdf') {
+            const iframe = document.createElement('iframe');
+            iframe.src = filePath;
+            iframe.title = fileName;
+            modalBody.appendChild(iframe);
+        } else {
+            const message = document.createElement('p');
+            message.textContent = 'Preview is not available for this file type.';
+
+            const link = document.createElement('a');
+            link.href = filePath;
+            link.download = fileName;
+            link.textContent = ' Download file';
+
+            message.appendChild(link);
+            modalBody.appendChild(message);
+        }
+
+        modal.classList.remove('hidden');
+    }
+
+    document.getElementById('file-modal').addEventListener('click', function(event) {
+        if (event.target === this) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    });
+</script>
+
+</body>
+</html>
